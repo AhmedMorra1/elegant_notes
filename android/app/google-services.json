@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "273748148600",
+    "firebase_url": "https://elegant-notes-bd0a6.firebaseio.com",
+    "project_id": "elegant-notes-bd0a6",
+    "storage_bucket": "elegant-notes-bd0a6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:273748148600:android:f6f261f8f0a5abd6d2888d",
+        "android_client_info": {
+          "package_name": "com.ahmedmorra.elegant_notes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "273748148600-a8q9qkod4l20qo5te55ndt55bs65f89n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6cn_DopvQJd_vYr3YYSL3CX011MBvIxw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "273748148600-a8q9qkod4l20qo5te55ndt55bs65f89n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
