@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:elegant_notes/screens/edit_note.dart';
+import 'package:elegant_notes/screens/view_note.dart';
 
 class HomePage extends StatelessWidget {
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -7,6 +9,15 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          print('add button pressed');
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            return ViewPage();
+          }));
+        },
+      ),
       body: SafeArea(
         child: Center(
           child: Column(

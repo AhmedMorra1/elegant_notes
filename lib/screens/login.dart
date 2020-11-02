@@ -30,7 +30,7 @@ class LoginPage extends StatelessWidget {
               child: Text('Login'),
               onPressed: () {
                 print('Login button pressed');
-                _signInWithEmailAndPassword();
+                _signInWithEmailAndPassword(context);
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return HomePage();
                 }));
@@ -64,7 +64,7 @@ class LoginPage extends StatelessWidget {
   }
 
   // Example code of how to sign in with email and password.
-  void _signInWithEmailAndPassword() async {
+  void _signInWithEmailAndPassword(BuildContext context) async {
     try {
       final User user = (await auth.signInWithEmailAndPassword(
         email: email,
@@ -72,8 +72,10 @@ class LoginPage extends StatelessWidget {
       ))
           .user;
       print('Signed In');
-    } catch (e) {
-      print("Failed to sign in with Email & Password");
+    } on FirebaseAuthException catch (e) {
+      print('Failed with error code: ${e.code}');
+      print(e.message);
+      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Failed with error code: ${e.code}')));
     }
   }
 }

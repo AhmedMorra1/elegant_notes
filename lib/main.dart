@@ -4,7 +4,7 @@ import 'package:elegant_notes/screens/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:elegant_notes/screens/warning.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:elegant_notes/services/auth_service.dart';
+import 'package:elegant_notes/screens/edit_note.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,16 +35,13 @@ class MyApp extends StatelessWidget {
         // once complete show your app
         if (snapshot.connectionState == ConnectionState.done) {
           print('CONNECTED');
-
-          if (AuthService().user() == null) {
-            return MaterialApp(
-              home: LoginPage(),
-            );
-          } else {
-            return MaterialApp(
-              home: HomePage(),
-            );
-          }
+          return StreamBuilder(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (BuildContext context, snapshot) {
+                return MaterialApp(
+                  home: snapshot.hasData && snapshot.data != null ? HomePage() : LoginPage(),
+                );
+              });
         }
         // if nothing happens return loading
         return MaterialApp(
