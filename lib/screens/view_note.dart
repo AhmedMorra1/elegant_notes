@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:elegant_notes/screens/card.dart';
+import 'package:elegant_notes/models/notemodel.dart';
+import 'package:elegant_notes/screens/edit_note.dart';
 
 class ViewPage extends StatelessWidget {
+  final Note note;
+  // final String title;
+  // final DateTime datetime;
+  // final String content;
+  ViewPage({this.note});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,11 +16,13 @@ class ViewPage extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text('Title'),
+                Text(note.toMap()['title']),
                 RaisedButton(
                   child: Icon(Icons.edit),
                   onPressed: () {
-                    print('edit note');
+                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      return EditNote(note: note);
+                    }));
                   },
                 )
               ],
@@ -22,12 +30,11 @@ class ViewPage extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            Text('Date here'),
+            Text(note.toMap()['datetime'].toString()),
             SizedBox(
               height: 10,
             ),
-            Text('This will be the area where the note content is shown'),
-            NoteCard(),
+            Text(note.toMap()['content']),
           ],
         ),
       ),

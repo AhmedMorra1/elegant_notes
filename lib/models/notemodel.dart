@@ -2,16 +2,13 @@ class Note {
   String title;
   String content;
   DateTime datetime;
+  String id;
 
-  Note({this.content, this.datetime, this.title});
+  Note({this.content, this.datetime, this.title, this.id});
 
   //Convert to Map
   Map<String, dynamic> toMap() {
-    return {
-      'title': title,
-      'content': content,
-      'datetime': datetime,
-    };
+    return {'title': title, 'content': content, 'datetime': datetime, 'id': id};
   }
 
   //Read from Map
@@ -19,8 +16,6 @@ class Note {
     title = data['title'];
     content = data['content'];
     datetime = data['datetime'];
+    id = data['id'];
   }
-
-  //Update
-  //Delete
 }
