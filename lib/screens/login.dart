@@ -6,6 +6,7 @@ class LoginPage extends StatelessWidget {
   static String email;
   static String password;
   final FirebaseAuth auth = FirebaseAuth.instance;
+  static String uid;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +33,9 @@ class LoginPage extends StatelessWidget {
                 print('Login button pressed');
                 _signInWithEmailAndPassword(context);
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return HomePage();
+                  return HomePage(
+                    uid: uid,
+                  );
                 }));
               },
             ),
@@ -72,6 +75,7 @@ class LoginPage extends StatelessWidget {
       ))
           .user;
       print('Signed In');
+      uid = auth.currentUser.uid;
     } on FirebaseAuthException catch (e) {
       print('Failed with error code: ${e.code}');
       print(e.message);
