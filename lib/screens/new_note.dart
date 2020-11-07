@@ -41,6 +41,7 @@ class NewNote extends StatelessWidget {
                   if (content != null) {
                     print('Note Saved');
                     addNote(Note(title: title, content: content, datetime: DateTime.now()).toMap());
+                    Navigator.of(context).pop();
                   } else {
                     print('Please add note Content.');
                   }
@@ -55,9 +56,10 @@ class NewNote extends StatelessWidget {
               color: Colors.black,
             ),
             RaisedButton(
-                child: Text('Delete'),
+                child: Text('Cancel'),
                 onPressed: () {
-                  print('delete note');
+                  print('Cancel note');
+                  Navigator.of(context).pop();
                 })
           ],
         ),

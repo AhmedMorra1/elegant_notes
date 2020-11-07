@@ -6,6 +6,7 @@ import 'package:elegant_notes/screens/login.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elegant_notes/screens/card.dart';
 import 'package:elegant_notes/models/notemodel.dart';
+import 'package:flutter/rendering.dart';
 
 class HomePage extends StatelessWidget {
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -16,21 +17,11 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     print('Current user is $uid');
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          GestureDetector(
-            child: Icon(Icons.logout),
-            onTap: () async {
-              await auth.signOut();
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return LoginPage();
-              }));
-            },
-          ),
-        ],
-      ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: Icon(
+          Icons.add,
+          size: 50,
+        ),
         onPressed: () {
           print('add button pressed');
           Navigator.of(context).push(MaterialPageRoute(builder: (context) {
@@ -38,32 +29,61 @@ class HomePage extends StatelessWidget {
           }));
         },
       ),
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Notes',
-                style: TextStyle(
-                  fontSize: 18,
-                ),
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Notes',
+                              style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+                            ),
+                            NotesCount(
+                              auth1: auth,
+                              uid: uid,
+                            ),
+                          ],
+                        ),
+                        GestureDetector(
+                          child: Icon(Icons.logout),
+                          onTap: () async {
+                            await auth.signOut();
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                              return LoginPage();
+                            }));
+                          },
+                        )
+                      ],
+                    ),
+                  ),
+                  // Text(count != null ? count.toString() : '0'),
+
+                  //Text(auth.currentUser != null ? auth.currentUser.uid : 'Loading...'),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20),
+                    child: NotesGrid(
+                      auth1: auth,
+                      uid: uid,
+                    ),
+                  ),
+                ],
               ),
-              // Text(count != null ? count.toString() : '0'),
-              NotesCount(
-                auth1: auth,
-                uid: uid,
-              ),
-              //Text(auth.currentUser.uid != null ? auth.currentUser.uid : 'No user id'),
-              Text(auth.currentUser != null ? auth.currentUser.uid : 'Loading...'),
-              SizedBox(
-                height: 20,
-              ),
-              NotesGrid(
-                auth1: auth,
-                uid: uid,
-              ),
-            ],
+            ),
           ),
         ),
       ),
@@ -88,7 +108,14 @@ class NotesCount extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Text("Loading");
         }
-        return new Text(snapshot.data.docs.length.toString());
+        return new Text(
+          '${snapshot.data.docs.length.toString()} notes',
+          style: TextStyle(
+            fontSize: 18,
+            color: Colors.grey.shade500,
+            fontWeight: FontWeight.w600,
+          ),
+        );
       },
     );
   }
@@ -115,6 +142,7 @@ class NotesGrid extends StatelessWidget {
           return Text("Loading");
         }
         return GridView.builder(
+          physics: NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
           itemBuilder: (BuildContext context, int index) {

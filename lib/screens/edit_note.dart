@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elegant_notes/models/notemodel.dart';
+import 'package:elegant_notes/screens/home.dart';
 
 class EditNote extends StatelessWidget {
   final Note note;
@@ -56,6 +57,8 @@ class EditNote extends StatelessWidget {
                 onPressed: () {
                   print('delete note');
                   deleteNote();
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
                 })
           ],
         ),

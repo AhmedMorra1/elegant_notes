@@ -4,9 +4,6 @@ import 'package:elegant_notes/models/notemodel.dart';
 
 class NoteCard extends StatelessWidget {
   final Note note;
-  // final String title;
-  // final DateTime datetime;
-  // final String content;
   NoteCard({this.note});
   @override
   Widget build(BuildContext context) {
@@ -18,21 +15,40 @@ class NoteCard extends StatelessWidget {
           ));
         }));
       },
-      child: Container(
-        width: MediaQuery.of(context).size.width / 2.5,
-        height: MediaQuery.of(context).size.height / 3,
-        child: Column(
-          children: [
-            Text(note.toMap()['title']),
-            SizedBox(
-              height: 10,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20, bottom: 20),
+        child: Container(
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.grey.shade200),
+          width: MediaQuery.of(context).size.width / 2.5,
+          height: MediaQuery.of(context).size.height / 2,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  note.toMap()['title'],
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.grey.shade700),
+                  maxLines: 1,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  note.toMap()['datetime'].toString().substring(0, 11),
+                  style: TextStyle(color: Colors.grey.shade600),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  note.toMap()['content'],
+                  style: TextStyle(color: Colors.grey.shade700),
+                  maxLines: 5,
+                )
+              ],
             ),
-            Text(note.toMap()['datetime'].toString()),
-            SizedBox(
-              height: 10,
-            ),
-            Text(note.toMap()['content'])
-          ],
+          ),
         ),
       ),
     );
