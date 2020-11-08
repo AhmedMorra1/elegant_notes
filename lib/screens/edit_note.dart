@@ -8,7 +8,6 @@ class EditNote extends StatelessWidget {
   final Note note;
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
-  TextEditingController datetimeController = TextEditingController();
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore store = FirebaseFirestore.instance;
   EditNote({this.note});
