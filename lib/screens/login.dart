@@ -108,7 +108,6 @@ class LoginPage extends StatelessWidget {
                   Expanded(
                     flex: 3,
                     child: RaisedButton(
-                      highlightColor: Colors.blue,
                       child: Text(
                         'Sign Up',
                         style: TextStyle(fontSize: 18),
