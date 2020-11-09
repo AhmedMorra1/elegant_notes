@@ -1,160 +1,224 @@
 import 'dart:ui';
-
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:elegant_notes/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   static String email;
   static String password;
-  final FirebaseAuth auth = FirebaseAuth.instance;
   static String uid;
+
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
   TextEditingController emailController = TextEditingController();
+
   TextEditingController passwordController = TextEditingController();
+
+  bool _action = false;
+
+  void _submit() {
+    setState(() {
+      _action = true;
+    });
+
+    //Simulate a service call
+    print('submitting to backend...');
+    new Future.delayed(new Duration(seconds: 4), () {
+      setState(() {
+        _action = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Text(
-                  'Welcome!',
-                  style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              Text('Email'),
-              SizedBox(
-                height: 10,
-              ),
-              TextField(
-                controller: emailController,
-                maxLines: 1,
-                autofocus: false,
-                showCursor: true,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  hintText: 'Enter Email',
-                  hintStyle: TextStyle(
-                    color: Colors.grey.shade300,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
+      body: ModalProgressHUD(
+        inAsyncCall: _action,
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Text(
+                    'Welcome!',
+                    style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
                   ),
-                  border: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey), borderRadius: BorderRadius.all(Radius.circular(2))),
                 ),
-                textAlign: TextAlign.start,
-              ),
-              //Text('Password'),
-              SizedBox(
-                height: 30,
-              ),
-              Text('Password'),
-              SizedBox(
-                height: 10,
-              ),
-              TextField(
-                controller: passwordController,
-                maxLines: 1,
-                autofocus: false,
-                showCursor: true,
-                keyboardType: TextInputType.text,
-                obscureText: true,
-                decoration: InputDecoration(
-                  hintText: 'Enter Password',
-                  hintStyle: TextStyle(
-                    color: Colors.grey.shade300,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  border: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey), borderRadius: BorderRadius.all(Radius.circular(2))),
+                SizedBox(
+                  height: 50,
                 ),
-                textAlign: TextAlign.start,
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: RaisedButton(
-                      child: Text(
-                        'Login',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      onPressed: () {
-                        print('Login button pressed');
-                        _signInWithEmailAndPassword(context);
-                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return HomePage(
-                            uid: uid,
-                          );
-                        }));
-                      },
+                Text('Email'),
+                SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  controller: emailController,
+                  maxLines: 1,
+                  autofocus: true,
+                  showCursor: true,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    hintText: 'Enter Email',
+                    hintStyle: TextStyle(
+                      color: Colors.grey.shade300,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
                     ),
+                    border: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey), borderRadius: BorderRadius.all(Radius.circular(2))),
                   ),
-                  Expanded(
-                    child: Center(child: Text('Or')),
-                    flex: 1,
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: RaisedButton(
-                      child: Text(
-                        'Sign Up',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      onPressed: () {
-                        print('Sign Up button pressed');
-                        _register();
-                      },
+                  textAlign: TextAlign.start,
+                ),
+                //Text('Password'),
+                SizedBox(
+                  height: 30,
+                ),
+                Text('Password'),
+                SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  controller: passwordController,
+                  maxLines: 1,
+                  autofocus: true,
+                  showCursor: true,
+                  keyboardType: TextInputType.text,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    hintText: 'Enter Password',
+                    hintStyle: TextStyle(
+                      color: Colors.grey.shade300,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
                     ),
+                    border: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey), borderRadius: BorderRadius.all(Radius.circular(2))),
                   ),
-                ],
-              ),
-            ],
+                  textAlign: TextAlign.start,
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: RaisedButton(
+                        child: Text(
+                          'Login',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        onPressed: () {
+                          print('Login button pressed');
+                          _signInWithEmailAndPassword(context);
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      child: Center(child: Text('Or')),
+                      flex: 1,
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: RaisedButton(
+                        child: Text(
+                          'Sign Up',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        onPressed: () {
+                          print('Sign Up button pressed');
+                          _register(context);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  // Example code for registration.
-  void _register() async {
-    final User user = (await auth.createUserWithEmailAndPassword(
-      email: emailController.text,
-      password: passwordController.text,
-    ))
-        .user;
-    if (user != null) {
-      print('SIGN UP SUCCESS');
-    } else {
-      print('SING UP FAILURE');
+  void _register(BuildContext context) async {
+    User user;
+    try {
+      _submit();
+      final User user = (await auth.createUserWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text,
+      ))
+          .user;
+      print('Signed Up');
+      LoginPage.uid = auth.currentUser.uid;
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return HomePage(
+          uid: LoginPage.uid,
+        );
+      }));
+      // if (user != null) {
+      //   print('SIGN UP SUCCESS');
+      //   uid = auth.currentUser.uid;
+      //   Navigator.push(context, MaterialPageRoute(builder: (context) {
+      //     return HomePage(
+      //       uid: uid,
+      //     );
+      //   }));
+      // } else {
+      //   print('SING UP FAILURE');
+      //   Scaffold.of(context).showSnackBar(SnackBar(
+      //     content: Text('Sign Up Failed, Try Again!'),
+      //   ));
+      // }
+    } on FirebaseAuthException catch (e) {
+      print('Failed with error code: ${e.code}');
+      print(e.message);
+      Fluttertoast.showToast(
+          msg: "This Email is registered!", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
+      //Scaffold.of(context).showSnackBar(SnackBar(content: Text('Failed with error code: ${e.code}')));
     }
   }
 
-  // Example code of how to sign in with email and password.
-  void _signInWithEmailAndPassword(BuildContext context) async {
+  void _signInWithEmailAndPassword(
+    BuildContext context,
+  ) async {
     try {
+      _submit();
       final User user = (await auth.signInWithEmailAndPassword(
-        email: emailController.text,
+        email: emailController.text.trim(),
         password: passwordController.text,
       ))
           .user;
       print('Signed In');
-      uid = auth.currentUser.uid;
+      LoginPage.uid = auth.currentUser.uid;
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return HomePage(
+          uid: LoginPage.uid,
+        );
+      }));
     } on FirebaseAuthException catch (e) {
       print('Failed with error code: ${e.code}');
       print(e.message);
-      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Failed with error code: ${e.code}')));
+      Fluttertoast.showToast(
+          msg: "Email or Password are Wrong!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+      //Scaffold.of(context).showSnackBar(SnackBar(content: Text('Failed with error code: ${e.code}')));
     }
   }
 }

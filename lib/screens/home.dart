@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:elegant_notes/screens/new_note.dart';
-import 'package:elegant_notes/screens/view_note.dart';
+import 'package:elegant_notes/screens/alert.dart';
 import 'package:elegant_notes/screens/login.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elegant_notes/screens/card.dart';
@@ -13,6 +13,7 @@ class HomePage extends StatelessWidget {
   static int count;
   final String uid;
   HomePage({this.uid});
+
   @override
   Widget build(BuildContext context) {
     print('Current user is $uid');
@@ -58,11 +59,18 @@ class HomePage extends StatelessWidget {
                         ),
                         GestureDetector(
                           child: Icon(Icons.logout),
-                          onTap: () async {
-                            await auth.signOut();
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                              return LoginPage();
-                            }));
+                          onTap: () {
+                            Alert(
+                              title: 'Sign Out!',
+                              message: 'Do you confirm Signing out?',
+                              context: context,
+                              button: 'No',
+                              button2: 'Yes',
+                            ).showDialogNow();
+                            // await auth.signOut();
+                            // Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                            //   return LoginPage();
+                            // }));
                           },
                         )
                       ],

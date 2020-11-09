@@ -18,7 +18,7 @@ class NoteCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(left: 20, bottom: 20),
         child: Container(
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.grey.shade200),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.grey.shade100),
           width: MediaQuery.of(context).size.width / 2.5,
           height: MediaQuery.of(context).size.height / 2,
           child: Padding(

@@ -12,30 +12,65 @@ class ViewPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Text(note.toMap()['title']),
-                RaisedButton(
-                  child: Icon(Icons.edit),
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      return EditNote(note: note);
-                    }));
-                  },
-                )
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(note.toMap()['datetime'].toString()),
-            SizedBox(
-              height: 10,
-            ),
-            Text(note.toMap()['content']),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              GestureDetector(
+                child: Icon(
+                  Icons.arrow_back,
+                  size: 30,
+                ),
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          note.toMap()['title'],
+                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(note.toMap()['datetime'].toString().substring(0, 16)),
+                      ],
+                    ),
+                  ),
+                  GestureDetector(
+                    child: Icon(
+                      Icons.edit,
+                      size: 30,
+                    ),
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return EditNote(note: note);
+                      }));
+                    },
+                  )
+                ],
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Text(
+                note.toMap()['content'],
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
