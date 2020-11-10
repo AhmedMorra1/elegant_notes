@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:elegant_notes/screens/new_note.dart';
-import 'package:elegant_notes/screens/alert.dart';
+import 'package:elegant_notes/screens/logout_alert.dart';
 import 'package:elegant_notes/screens/login.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elegant_notes/screens/card.dart';
@@ -60,12 +60,8 @@ class HomePage extends StatelessWidget {
                         GestureDetector(
                           child: Icon(Icons.logout),
                           onTap: () {
-                            Alert(
-                              title: 'Sign Out!',
-                              message: 'Do you confirm Signing out?',
+                            LogoutAlert(
                               context: context,
-                              button: 'No',
-                              button2: 'Yes',
                             ).showDialogNow();
                             // await auth.signOut();
                             // Navigator.of(context).push(MaterialPageRoute(builder: (context) {
@@ -135,7 +131,7 @@ class NotesGrid extends StatelessWidget {
   NotesGrid({this.auth1, this.uid});
   @override
   Widget build(BuildContext context) {
-    CollectionReference notes = FirebaseFirestore.instance.collection('users').doc(auth1.currentUser != null ? auth1.currentUser.uid : 'Loading...').collection('notes');
+    Query notes = FirebaseFirestore.instance.collection('users').doc(auth1.currentUser != null ? auth1.currentUser.uid : 'Loading...').collection('notes').orderBy('datetime', descending: true);
     return StreamBuilder(
       stream: notes.snapshots(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -149,6 +145,8 @@ class NotesGrid extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Text("Loading");
         }
+        print('SSSSSSSSSNNNNNNNNNNAAAAAAAAAAPPPPPPPPPPPP');
+        print(snapshot.data.documents);
         return GridView.builder(
           physics: NeverScrollableScrollPhysics(),
           shrinkWrap: true,

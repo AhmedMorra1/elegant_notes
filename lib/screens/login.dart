@@ -4,6 +4,7 @@ import 'package:elegant_notes/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:elegant_notes/screens/forgot_alert.dart';
 
 class LoginPage extends StatefulWidget {
   static String email;
@@ -56,11 +57,11 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 SizedBox(
-                  height: 50,
+                  height: 40,
                 ),
                 Text('Email'),
                 SizedBox(
-                  height: 10,
+                  height: 8,
                 ),
                 TextField(
                   controller: emailController,
@@ -104,6 +105,19 @@ class _LoginPageState extends State<LoginPage> {
                     border: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey), borderRadius: BorderRadius.all(Radius.circular(2))),
                   ),
                   textAlign: TextAlign.start,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                GestureDetector(
+                  child: Text(
+                    'Forgot Password?',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                  onTap: () {
+                    print('forgot password clicked');
+                    ForgotAlert(context: context).showDialogNow();
+                  },
                 ),
                 SizedBox(
                   height: 30,

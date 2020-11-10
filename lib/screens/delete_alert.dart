@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:elegant_notes/screens/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Alert {
+class DeleteAlert {
   final FirebaseAuth auth = FirebaseAuth.instance;
-  final String title;
-  final String message;
-  final String button;
-  final String button2;
+  final FirebaseFirestore store = FirebaseFirestore.instance;
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+  final String noteId;
   final BuildContext context;
 
-  Alert({@required this.title, @required this.message, @required this.button, @required this.context, @required this.button2});
+  DeleteAlert({@required this.context, @required this.noteId});
 
   void showDialogNow() {
     showDialog<void>(
@@ -18,7 +17,7 @@ class Alert {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(title,
+          title: Text('Delete Note',
               style: TextStyle(
                 fontSize: 18,
               )),
@@ -26,7 +25,7 @@ class Alert {
             child: ListBody(
               children: <Widget>[
                 Text(
-                  message,
+                  'Do you confirm deleting this note?',
                   style: TextStyle(fontSize: 18),
                 ),
               ],
@@ -35,7 +34,7 @@ class Alert {
           actions: <Widget>[
             RaisedButton(
               child: Text(
-                button,
+                'No',
                 style: TextStyle(fontSize: 18),
               ),
               onPressed: () {
@@ -43,19 +42,23 @@ class Alert {
               },
             ),
             RaisedButton(
-                child: Text(button2,
+                child: Text('Yes',
                     style: TextStyle(
                       fontSize: 18,
                     )),
                 onPressed: () async {
-                  await auth.signOut();
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                    return LoginPage();
-                  }));
+                  await deleteNote();
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
                 })
           ],
         );
       },
     );
+  }
+
+  Future<void> deleteNote() {
+    return users.doc(auth.currentUser.uid).collection('notes').doc(noteId).delete().then((value) => print("Note Deleted")).catchError((error) => print("Failed to delete Note: $error"));
   }
 }

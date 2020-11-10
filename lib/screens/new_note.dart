@@ -19,7 +19,12 @@ class NewNote extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(Icons.arrow_back_outlined),
+              GestureDetector(
+                child: Icon(Icons.arrow_back_outlined),
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+              ),
               SizedBox(
                 height: 20,
               ),
@@ -31,11 +36,7 @@ class NewNote extends StatelessWidget {
                 controller: titleController,
               ),
               SizedBox(
-                height: 10,
-              ),
-              //Text(DateTime.now().toString()),
-              SizedBox(
-                height: 10,
+                height: 20,
               ),
               //Text('Content'),
               Expanded(
@@ -43,7 +44,7 @@ class NewNote extends StatelessWidget {
                   maxLines: null,
                   keyboardType: TextInputType.multiline,
                   decoration: InputDecoration(
-                    hintText: 'Note conent here',
+                    hintText: 'Note content here',
                   ),
                   controller: contentController,
                 ),

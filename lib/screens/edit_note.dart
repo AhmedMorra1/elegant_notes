@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elegant_notes/models/notemodel.dart';
-import 'package:elegant_notes/screens/home.dart';
+import 'package:elegant_notes/screens/delete_alert.dart';
 
 class EditNote extends StatelessWidget {
   final Note note;
@@ -18,48 +18,88 @@ class EditNote extends StatelessWidget {
     contentController.text = note.content;
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            Text('Title'),
-            TextField(
-              controller: titleController,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text('Content'),
-            TextField(
-              controller: contentController,
-            ),
-            RaisedButton(
-              child: Text('Save'),
-              onPressed: () {
-                if (titleController.text != null) {
-                  if (contentController.text != null) {
-                    print('Note Saved');
-                    updateNote(Note(title: titleController.text, content: contentController.text, datetime: DateTime.now()).toMap());
-                  } else {
-                    print('Please add note Content.');
-                  }
-                } else {
-                  print('Please add note Title.');
-                }
-                print('save note');
-              },
-            ),
-            Divider(
-              height: 1,
-              color: Colors.black,
-            ),
-            RaisedButton(
-                child: Text('Delete'),
-                onPressed: () {
-                  print('delete note');
-                  deleteNote();
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              GestureDetector(
+                child: Icon(Icons.arrow_back_outlined),
+                onTap: () {
                   Navigator.of(context).pop();
-                  Navigator.of(context).pop();
-                })
-          ],
+                },
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                'Title',
+                style: TextStyle(color: Colors.grey),
+              ),
+              TextField(
+                controller: titleController,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                'Content',
+                style: TextStyle(color: Colors.grey),
+              ),
+              Expanded(
+                child: TextField(
+                  maxLines: null,
+                  keyboardType: TextInputType.multiline,
+                  controller: contentController,
+                ),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: RaisedButton(
+                        child: Text(
+                          'Save',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        onPressed: () {
+                          if (titleController.text != null) {
+                            if (contentController.text != null) {
+                              print('Note Saved');
+                              updateNote(Note(title: titleController.text, content: contentController.text, datetime: DateTime.now()).toMap());
+                            } else {
+                              print('Please add note Content.');
+                            }
+                          } else {
+                            print('Please add note Title.');
+                          }
+                          print('save note');
+                        },
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: RaisedButton(
+                          child: Text(
+                            'Delete',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          onPressed: () {
+                            print('delete note');
+                            DeleteAlert(context: context, noteId: note.id).showDialogNow();
+                            // deleteNote();
+                            // Navigator.of(context).pop();
+                            // Navigator.of(context).pop();
+                          }),
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
