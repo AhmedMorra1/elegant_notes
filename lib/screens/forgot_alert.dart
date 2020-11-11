@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:elegant_notes/size_config.dart';
 
 class ForgotAlert {
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -18,16 +19,19 @@ class ForgotAlert {
         return AlertDialog(
           title: Text('Forgot Password',
               style: TextStyle(
-                fontSize: 18,
+                fontSize: SizeConfig.safeBlockVertical * 2.25,
               )),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
                 Text(
                   'Please enter your email to send a password reset link to your email.',
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(fontSize: SizeConfig.safeBlockVertical * 2.25),
                 ),
                 TextField(
+                  style: TextStyle(
+                    fontSize: SizeConfig.safeBlockVertical * 2.25,
+                  ),
                   decoration: InputDecoration(hintText: 'Email here'),
                   controller: emailController,
                 )
@@ -38,7 +42,7 @@ class ForgotAlert {
             RaisedButton(
               child: Text(
                 'Cancel',
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: SizeConfig.safeBlockVertical * 2.25),
               ),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -47,7 +51,7 @@ class ForgotAlert {
             RaisedButton(
                 child: Text('Send',
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: SizeConfig.safeBlockVertical * 2.25,
                     )),
                 onPressed: () {
                   resetPassword(context);

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elegant_notes/models/notemodel.dart';
 import 'package:elegant_notes/screens/delete_alert.dart';
+import 'package:elegant_notes/size_config.dart';
 
 class EditNote extends StatelessWidget {
   final Note note;
@@ -14,12 +15,13 @@ class EditNote extends StatelessWidget {
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     titleController.text = note.title;
     contentController.text = note.content;
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: new EdgeInsets.all(SizeConfig.blockSizeVertical * 2),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -30,7 +32,7 @@ class EditNote extends StatelessWidget {
                 },
               ),
               SizedBox(
-                height: 20,
+                height: SizeConfig.blockSizeVertical * 2,
               ),
               Text(
                 'Title',
@@ -38,30 +40,37 @@ class EditNote extends StatelessWidget {
               ),
               TextField(
                 controller: titleController,
+                style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 3),
+                maxLines: null,
               ),
               SizedBox(
-                height: 20,
+                height: SizeConfig.blockSizeVertical * 5,
               ),
               Text(
                 'Content',
                 style: TextStyle(color: Colors.grey),
               ),
               Expanded(
-                child: TextField(
-                  maxLines: null,
-                  keyboardType: TextInputType.multiline,
-                  controller: contentController,
+                child: SingleChildScrollView(
+                  child: TextField(
+                    style: TextStyle(
+                      fontSize: SizeConfig.blockSizeVertical * 2.5,
+                    ),
+                    maxLines: null,
+                    keyboardType: TextInputType.multiline,
+                    controller: contentController,
+                  ),
                 ),
               ),
               Row(
                 children: [
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.all(20),
+                      padding: new EdgeInsets.all(SizeConfig.blockSizeVertical * 2),
                       child: RaisedButton(
                         child: Text(
                           'Save',
-                          style: TextStyle(fontSize: 18),
+                          style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 2),
                         ),
                         onPressed: () {
                           if (titleController.text != null) {
@@ -81,11 +90,11 @@ class EditNote extends StatelessWidget {
                   ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.all(20),
+                      padding: new EdgeInsets.all(SizeConfig.blockSizeVertical * 2),
                       child: RaisedButton(
                           child: Text(
                             'Delete',
-                            style: TextStyle(fontSize: 18),
+                            style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 2),
                           ),
                           onPressed: () {
                             print('delete note');

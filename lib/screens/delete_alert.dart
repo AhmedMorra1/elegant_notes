@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:elegant_notes/size_config.dart';
 
 class DeleteAlert {
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -19,14 +20,14 @@ class DeleteAlert {
         return AlertDialog(
           title: Text('Delete Note',
               style: TextStyle(
-                fontSize: 18,
+                fontSize: SizeConfig.safeBlockVertical * 2.5,
               )),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
                 Text(
                   'Do you confirm deleting this note?',
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(fontSize: SizeConfig.safeBlockVertical * 2.5),
                 ),
               ],
             ),
@@ -35,7 +36,7 @@ class DeleteAlert {
             RaisedButton(
               child: Text(
                 'No',
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: SizeConfig.safeBlockVertical * 2.5),
               ),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -44,7 +45,7 @@ class DeleteAlert {
             RaisedButton(
                 child: Text('Yes',
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: SizeConfig.safeBlockVertical * 2.5,
                     )),
                 onPressed: () async {
                   await deleteNote();

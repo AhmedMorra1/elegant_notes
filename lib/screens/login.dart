@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:elegant_notes/screens/forgot_alert.dart';
+import 'package:elegant_notes/size_config.dart';
 
 class LoginPage extends StatefulWidget {
   static String email;
@@ -40,12 +41,13 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
       body: ModalProgressHUD(
         inAsyncCall: _action,
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: new EdgeInsets.all(SizeConfig.safeBlockHorizontal * 5),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,15 +55,15 @@ class _LoginPageState extends State<LoginPage> {
                 Center(
                   child: Text(
                     'Welcome!',
-                    style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: SizeConfig.safeBlockVertical * 7, fontWeight: FontWeight.bold),
                   ),
                 ),
                 SizedBox(
-                  height: 40,
+                  height: SizeConfig.safeBlockVertical * 5,
                 ),
                 Text('Email'),
                 SizedBox(
-                  height: 8,
+                  height: SizeConfig.safeBlockVertical * 1,
                 ),
                 TextField(
                   controller: emailController,
@@ -73,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                     hintText: 'Enter Email',
                     hintStyle: TextStyle(
                       color: Colors.grey.shade300,
-                      fontSize: 18,
+                      fontSize: SizeConfig.safeBlockVertical * 2.5,
                       fontWeight: FontWeight.w500,
                     ),
                     border: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey), borderRadius: BorderRadius.all(Radius.circular(2))),
@@ -82,11 +84,11 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 //Text('Password'),
                 SizedBox(
-                  height: 30,
+                  height: SizeConfig.safeBlockVertical * 3,
                 ),
                 Text('Password'),
                 SizedBox(
-                  height: 10,
+                  height: SizeConfig.safeBlockVertical * 1,
                 ),
                 TextField(
                   controller: passwordController,
@@ -99,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                     hintText: 'Enter Password',
                     hintStyle: TextStyle(
                       color: Colors.grey.shade300,
-                      fontSize: 18,
+                      fontSize: SizeConfig.safeBlockVertical * 2.5,
                       fontWeight: FontWeight.w500,
                     ),
                     border: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey), borderRadius: BorderRadius.all(Radius.circular(2))),
@@ -107,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                   textAlign: TextAlign.start,
                 ),
                 SizedBox(
-                  height: 10,
+                  height: SizeConfig.safeBlockVertical * 1,
                 ),
                 GestureDetector(
                   child: Text(
@@ -120,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                   },
                 ),
                 SizedBox(
-                  height: 30,
+                  height: SizeConfig.safeBlockVertical * 3,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -130,7 +132,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: RaisedButton(
                         child: Text(
                           'Login',
-                          style: TextStyle(fontSize: 18),
+                          style: TextStyle(fontSize: SizeConfig.safeBlockVertical * 2.5),
                         ),
                         onPressed: () {
                           print('Login button pressed');
@@ -147,7 +149,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: RaisedButton(
                         child: Text(
                           'Sign Up',
-                          style: TextStyle(fontSize: 18),
+                          style: TextStyle(fontSize: SizeConfig.safeBlockVertical * 2.5),
                         ),
                         onPressed: () {
                           print('Sign Up button pressed');
@@ -231,7 +233,7 @@ class _LoginPageState extends State<LoginPage> {
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.red,
           textColor: Colors.white,
-          fontSize: 16.0);
+          fontSize: SizeConfig.safeBlockVertical * 2.5);
       //Scaffold.of(context).showSnackBar(SnackBar(content: Text('Failed with error code: ${e.code}')));
     }
   }

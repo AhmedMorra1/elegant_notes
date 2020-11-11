@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:elegant_notes/screens/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:elegant_notes/size_config.dart';
 
 class LogoutAlert {
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -16,14 +17,14 @@ class LogoutAlert {
         return AlertDialog(
           title: Text('Sign Out!',
               style: TextStyle(
-                fontSize: 18,
+                fontSize: SizeConfig.safeBlockVertical * 2.2,
               )),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
                 Text(
                   'Do you confirm signing out?',
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(fontSize: SizeConfig.safeBlockVertical * 2.2),
                 ),
               ],
             ),
@@ -32,7 +33,7 @@ class LogoutAlert {
             RaisedButton(
               child: Text(
                 'No',
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: SizeConfig.safeBlockVertical * 2.2),
               ),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -41,7 +42,7 @@ class LogoutAlert {
             RaisedButton(
                 child: Text('Yes',
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: SizeConfig.safeBlockVertical * 2.2,
                     )),
                 onPressed: () async {
                   await auth.signOut();

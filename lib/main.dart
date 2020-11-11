@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:elegant_notes/screens/warning.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:elegant_notes/screens/edit_note.dart';
+import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,6 +21,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     return FutureBuilder(
       // Initialize FlutterFire:
       future: _initialization,
@@ -27,6 +31,7 @@ class MyApp extends StatelessWidget {
         // Check for errors
         if (snapshot.hasError) {
           return (MaterialApp(
+            debugShowCheckedModeBanner: false,
             home: Warning(
               warning: 'Error',
             ),
@@ -39,12 +44,14 @@ class MyApp extends StatelessWidget {
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (BuildContext context, snapshot) {
                 return MaterialApp(
+                  debugShowCheckedModeBanner: false,
                   home: snapshot.hasData && snapshot.data != null ? HomePage() : LoginPage(),
                 );
               });
         }
         // if nothing happens return loading
         return MaterialApp(
+          debugShowCheckedModeBanner: false,
           home: //LoginPage()
               Warning(
             warning: 'Loading',

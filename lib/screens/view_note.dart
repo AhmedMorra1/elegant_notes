@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:elegant_notes/models/notemodel.dart';
 import 'package:elegant_notes/screens/edit_note.dart';
+import 'package:elegant_notes/size_config.dart';
 
 class ViewPage extends StatelessWidget {
   final Note note;
@@ -10,24 +11,25 @@ class ViewPage extends StatelessWidget {
   ViewPage({this.note});
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
+          padding: new EdgeInsets.only(top: SizeConfig.blockSizeVertical * 2, right: SizeConfig.blockSizeVertical * 2, left: SizeConfig.blockSizeVertical * 2),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               GestureDetector(
                 child: Icon(
                   Icons.arrow_back,
-                  size: 30,
+                  size: SizeConfig.blockSizeVertical * 4,
                 ),
                 onTap: () {
                   Navigator.of(context).pop();
                 },
               ),
               SizedBox(
-                height: 20,
+                height: SizeConfig.blockSizeVertical * 2,
               ),
               Row(
                 children: [
@@ -37,19 +39,22 @@ class ViewPage extends StatelessWidget {
                       children: [
                         Text(
                           note.toMap()['title'],
-                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 3, fontWeight: FontWeight.bold),
                         ),
                         SizedBox(
-                          height: 10,
+                          height: SizeConfig.blockSizeVertical * 1,
                         ),
                         Text(note.toMap()['datetime'].toString().substring(0, 16)),
                       ],
                     ),
                   ),
+                  SizedBox(
+                    width: SizeConfig.blockSizeVertical * 2,
+                  ),
                   GestureDetector(
                     child: Icon(
                       Icons.edit,
-                      size: 30,
+                      size: SizeConfig.blockSizeVertical * 4,
                     ),
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -61,12 +66,12 @@ class ViewPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
               ),
               SizedBox(
-                height: 30,
+                height: SizeConfig.blockSizeVertical * 3,
               ),
               Text(
                 note.toMap()['content'],
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: SizeConfig.blockSizeVertical * 2.5,
                 ),
               ),
             ],

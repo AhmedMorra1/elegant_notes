@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:elegant_notes/screens/new_note.dart';
 import 'package:elegant_notes/screens/logout_alert.dart';
-import 'package:elegant_notes/screens/login.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elegant_notes/screens/card.dart';
 import 'package:elegant_notes/models/notemodel.dart';
 import 'package:flutter/rendering.dart';
+import 'package:elegant_notes/size_config.dart';
 
 class HomePage extends StatelessWidget {
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -16,12 +16,13 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     print('Current user is $uid');
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: Icon(
           Icons.add,
-          size: 50,
+          size: SizeConfig.safeBlockVertical * 5,
         ),
         onPressed: () {
           print('add button pressed');
@@ -34,13 +35,13 @@ class HomePage extends StatelessWidget {
         child: SafeArea(
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.only(top: 20),
+              padding: new EdgeInsets.only(top: SizeConfig.safeBlockHorizontal * 5),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(20),
+                    padding: new EdgeInsets.all(SizeConfig.safeBlockHorizontal * 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -49,7 +50,7 @@ class HomePage extends StatelessWidget {
                           children: [
                             Text(
                               'Notes',
-                              style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+                              style: TextStyle(fontSize: SizeConfig.safeBlockVertical * 4, fontWeight: FontWeight.bold),
                             ),
                             NotesCount(
                               auth1: auth,
@@ -76,10 +77,10 @@ class HomePage extends StatelessWidget {
 
                   //Text(auth.currentUser != null ? auth.currentUser.uid : 'Loading...'),
                   SizedBox(
-                    height: 20,
+                    height: SizeConfig.safeBlockVertical * 2,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(right: 20),
+                    padding: new EdgeInsets.only(right: SizeConfig.safeBlockHorizontal * 4),
                     child: NotesGrid(
                       auth1: auth,
                       uid: uid,
@@ -115,7 +116,7 @@ class NotesCount extends StatelessWidget {
         return new Text(
           '${snapshot.data.docs.length.toString()} notes',
           style: TextStyle(
-            fontSize: 18,
+            fontSize: SizeConfig.safeBlockVertical * 2,
             color: Colors.grey.shade500,
             fontWeight: FontWeight.w600,
           ),
